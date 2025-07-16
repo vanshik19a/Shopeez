@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Welcome to our website. Contact us for more information and services.">
+    <meta name="author" content="Your Name">
+    <title>Feature-Rich Webpage</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Hero Section */
+        #hero {
+            background: url('mainpage3.jpg') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 120px 20px;
+        }
+
+        #hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        #hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        #hero button {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #hero button:hover {
+            background-color: #0056b3;
+        }
+
+        /* About Us Section */
+        #about {
+            background-color: white;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        #about h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        #about p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Contact Us Section */
+        #contact {
+            padding: 50px 20px;
+            background-color: #fff;
+            text-align: center;
+        }
+
+        #contact h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        #contact p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .contact-details {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .contact-item h3 {
+            font-size: 1.3rem;
+            color: #007BFF;
+        }
+
+        .contact-item p {
+            font-size: 1.1rem;
+        }
+
+        .contact-item a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer p {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        footer ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        footer ul li {
+            display: inline;
+        }
+
+        footer ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        footer ul li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section id="hero">
+        <h1>Welcome to Our Website</h1>
+        <p>Your solution to all your needs.</p>
+        <button onclick="location.href='#contact'">Contact Us</button>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about">
+        <h2>About Us</h2>
+        <p>We are a team of dedicated professionals providing top-notch services to our clients. Our goal is to deliver exceptional quality and satisfaction.</p>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <p>We would love to hear from you! Please reach out to us using the following details:</p>
+        
+        <div class="contact-details">
+            <div class="contact-item">
+                <h3>Email:</h3>
+                <p><a href="mailto:info@shopease.com">info@shopease.com</a></p>
+            </div>
+            <div class="contact-item">
+                <h3>Phone:</h3>
+                <p><a href="tel:+1234567890">+1 234 567 890</a></p>
+            </div>
+            <div class="contact-item">
+                <h3>Address:</h3>
+                <p> C- 112 Tagoor steet, New Delhi, India</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Your Company. All rights reserved.</p>
+        <ul>
+            <li><a href="https://www.facebook.com/shopease">Facebook</a></li>
+            <li><a href="https://www.twitter.com/shopease">Twitter</a></li>
+            <li><a href="https://www.instagram.com/shopease">Instagram</a></li>
+        </ul>
+    </footer>
+</body>
+</html>
