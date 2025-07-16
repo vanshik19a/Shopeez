@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEN'S CLOTHING STORE</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #2d3e50;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 15px;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .product-card h3 {
+            margin: 10px 0;
+        }
+
+        .product-card button {
+            background-color: #2d3e50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .product-card button:hover {
+            background-color: #1c2b38;
+        }
+
+        .cart {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+        }
+
+        .cart h3 {
+            margin: 0;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .cart ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .cart ul li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 5px 0;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .cart ul li button {
+            background-color: #2d3e50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .cart ul li button:hover {
+            background-color: #1c2b38;
+        }
+
+        .cart .total {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .customization-options {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            width: 100%;
+            border: 1px solid #ddd;
+        }
+
+        .customization-options label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .customization-options select, .customization-options input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .sticker-selection {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .sticker-selection img {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin: 5px;
+        }
+
+        .sticker-selection img:hover {
+            opacity: 0.7;
+        }
+
+        .close-button {
+            background-color: red;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .close-button:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>MEN'S CLOTHING STORE</h1>
+    </header>
+
+    <div class="container">
+        <!-- T-shirt Section -->
+        <div class="product-card" data-type="t-shirt" data-name="Basic T-Shirt" data-price="500">
+            <img src="men1.webp" alt="Basic T-Shirt">
+            <h3>Basic T-Shirt</h3>
+            <p>Rs 500<br>Comfortable cotton t-shirt in a variety of colors.</p>
+            <button onclick="showCustomizationOptions(this)">Customize</button>
+        </div>
+
+        <div class="product-card" data-type="t-shirt" data-name="Graphic T-Shirt" data-price="600">
+            <img src="gt.webp" alt="Graphic T-Shirt">
+            <h3>Graphic T-Shirt</h3>
+            <p>Rs 600<br>Stylish graphic t-shirt for casual outings.</p>
+            <button onclick="showCustomizationOptions(this)">Customize</button>
+        </div>
+
+        <div class="product-card" data-type="t-shirt" data-name="Striped T-Shirt" data-price="550">
+            <img src="stee.webp" alt="Striped T-Shirt">
+            <h3>Striped T-Shirt</h3>
+            <p>Rs 550<br>Chic striped design for a smart-casual look.</p>
+            <button onclick="showCustomizationOptions(this)">Customize</button>
+        </div>
+
+        <!-- Shirt Section -->
+        <div class="product-card" data-type="shirt" data-name="Casual Shirt" data-price="800">
+            <img src="cs.jpg" alt="Casual Shirt">
+            <h3>Casual Shirt</h3>
+            <p>Rs 800<br>Perfect for both formal and casual wear.</p>
+            <button onclick="showCustomizationOptions(this)">Customize</button>
+        </div>
+
+        <div class="product-card" data-type="shirt" data-name="Formal Shirt" data-price="1000">
+            <img src="fs.webp" alt="Formal Shirt">
+            <h3>Formal Shirt</h3>
+            <p>Rs 1000<br>Elegant formal shirt for business and events.</p>
+            <button onclick="showCustomizationOptions(this)">Customize</button>
+        </div>
+
+        <!-- Kurta Section -->
+        <div class="product-card" data-type="kurta" data-name="Casual Kurta" data-price="1200">
+            <img src="ck.webp" alt="Kurta">
+            <h3>Casual Kurta</h3>
+            <p>Rs 1200<br>Traditional kurta for a casual wear.</p>
+            <button onclick="showCustomizationOptions(this)">Customize</button>
+        </div>
+
+        <div class="product-card" data-type="kurta" data-name="Party wear Kurta" data-price="1500">
+            <img src="fk.avif" alt="Silk Kurta">
+            <h3>Party wear Kurta</h3>
+            <p>Rs 1500<br>Luxurious kurta for weddings and special events.</p>
+            <button onclick="showCustomizationOptions(this)">Customize</button>
+        </div>
+
+        <!-- Sherwani Section -->
+        <div class="product-card" data-type="sherwani" data-name="Wedding Sherwani" data-price="3000">
+            <img src="ws.jpg" alt="Wedding Sherwani">
+            <h3>Wedding Sherwani</h3>
+            <p>Rs 3000<br>Perfect for weddings with intricate embroidery.</p>
+            <button onclick="showCustomizationOptions(this)">Customize</button>
+        </div>
+
+        <div class="product-card" data-type="sherwani" data-name="Festive Sherwani" data-price="2500">
+            <img src="fs2.webp" alt="Festive Sherwani">
+            <h3>Festive Sherwani</h3>
+            <p>Rs 2500<br>Stylish sherwani for festive occasions.</p>
+            <button onclick="showCustomizationOptions(this)">Customize</button>
+        </div>
+    </div>
+
+    <div class="cart">
+        <h3>Your Cart</h3>
+        <ul id="cart-items"></ul>
+        <div class="total">Total: ₹0</div>
+    </div>
+
+    <!-- Customization Box -->
+    <div class="customization-options" id="customization-box" style="display: none;">
+        <h3>Customize Product</h3>
+        <label for="material">Select Material:</label>
+        <select id="material">
+            <option value="cotton" data-price="0">Cotton</option>
+            <option value="silk" data-price="500">Silk (+₹500)</option>
+            <option value="linen" data-price="300">Linen (+₹300)</option>
+        </select>
+
+        <label for="size">Select Size:</label>
+        <select id="size">
+            <option value="S">Small</option>
+            <option value="M">Medium</option>
+            <option value="L">Large</option>
+            <option value="XL">XL</option>
+        </select>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" value="1" min="1" max="10">
+
+        <label for="sticker">Add any Pattern Design: <br> OPTIONAL : CLICK ON ONE IF NONE</label>
+        <div class="sticker-selection">
+            <img src="d1.png" alt="Sticker 1" onclick="changeDesign('sticker1.jpg', 0)">
+            <img src="d2.jpg" alt="Sticker 2" onclick="changeDesign('sticker2.jpg', 100)">
+            <img src="d3.jpg" alt="Sticker 3" onclick="changeDesign('sticker3.jpg', 120)">
+            <img src="d4.jpg" alt="Sticker 4" onclick="changeDesign('sticker4.jpg', 150)">
+        </div>
+
+        <button onclick="addToCart()">Add to Cart</button>
+        <button class="close-button" onclick="closeCustomization()">Close</button>
+    </div>
+
+    <script>
+        const cartItems = [];
+        const cartList = document.getElementById('cart-items');
+        const totalElement = document.querySelector('.cart .total');
+
+        let stickerPrice = 0;
+
+        function showCustomizationOptions(button) {
+            const card = button.parentElement;
+            const name = card.getAttribute('data-name');
+            const basePrice = parseInt(card.getAttribute('data-price'));
+
+            const customizationBox = document.getElementById('customization-box');
+            customizationBox.style.display = 'block';
+        }
+
+        function closeCustomization() {
+            const customizationBox = document.getElementById('customization-box');
+            customizationBox.style.display = 'none';
+        }
+
+        function changeDesign(sticker, price) {
+            stickerPrice = price;
+        }
+
+        function addToCart() {
+            const material = document.getElementById('material').value;
+            const quantity = document.getElementById('quantity').value;
+
+            const basePrice = 500; // Assuming a base price for simplicity
+            const finalPrice = (basePrice + stickerPrice) * quantity;
+
+            const cartItem = {
+                material,
+                quantity,
+                price: finalPrice
+            };
+
+            cartItems.push(cartItem);
+            updateCart();
+            closeCustomization();
+        }
+
+        function removeFromCart(index) {
+            cartItems.splice(index, 1);  // Remove item from the cart array
+            updateCart();
+        }
+
+        function updateCart() {
+            cartList.innerHTML = '';
+            let total = 0;
+
+            cartItems.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `Material: ${item.material} - ₹${item.price} x ${item.quantity} 
+                                <button onclick="removeFromCart(${index})">Remove</button>`;
+                cartList.appendChild(li);
+                total += item.price;
+            });
+
+            totalElement.textContent = `Total: ₹${total}`;
+        }
+    </script>
+
+</body>
+</html>
