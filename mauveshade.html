@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Red Lip Shape Overlay</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #e0e0e0; /* Subtle background color */
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    #video {
+      display: block;
+      width: 90%;
+      height: 90%;
+      object-fit: cover;
+      border-radius: 15px; /* Rounded corners for the video */
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Subtle shadow for a sleek look */
+    }
+
+    #lipShape {
+      position: absolute;
+      top: 80%; /* Positioning lip image lower */
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 150px; /* Adjust the lip shape size */
+      pointer-events: none;
+      /* Removed animation */
+    }
+
+    /* Optional: Adding a header */
+    .header {
+      position: absolute;
+      top: 10%;
+      font-size: 24px;
+      color: #333;
+      font-weight: bold;
+      text-align: center;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      letter-spacing: 1px;
+      width: 100%;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="header">Mauve Magic Lip Shade</div> <!-- Header with title -->
+
+  <video id="video" autoplay></video>
+  <img id="lipShape" src="mauve.png" alt="Mauve Magic Lip Shape"> <!-- Replace with your own red lip image URL -->
+
+  <script>
+    // Function to access camera and display the video feed
+    async function setup() {
+      const videoElement = document.getElementById('video');
+      const lipShapeImage = document.getElementById('lipShape');
+
+      // Request access to the user's webcam
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      videoElement.srcObject = stream;
+
+      // Wait for the video to load and start playing
+      await new Promise(resolve => videoElement.onloadedmetadata = resolve);
+      videoElement.play();
+    }
+
+    // Initialize the setup once the page is loaded
+    window.onload = setup;
+  </script>
+
+</body>
+</html>
