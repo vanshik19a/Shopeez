@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cosmetics Online Store</title>
+  <style>
+    /* Basic styling */
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('bg cosmetic.jpeg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 30px;
+      color: #ff69b4;
+      font-size: 2.8em;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #ddd;
+      font-size: 1.2em;
+      margin-bottom: 30px;
+    }
+
+    /* Product grid layout */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: slideIn 1s forwards;
+    }
+
+    /* Animation for sliding products */
+    @keyframes slideIn {
+      from {
+        transform: translateX(-100%);
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* Product card styling */
+    .product-card {
+      background-color: rgba(255, 255, 255, 0.9); /* Slight transparency for contrast */
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Image styling */
+    .product-image {
+      width: 80%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 15px;
+      margin: 15px auto;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover .product-image {
+      transform: scale(1.05);
+    }
+
+    /* Product details */
+    .product-info {
+      padding: 20px;
+    }
+
+    .product-title {
+      font-size: 1.4em;
+      color: #333;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .product-price {
+      font-size: 1.2em;
+      color: #e91e63;
+      margin-bottom: 15px;
+    }
+
+    /* Button styling */
+    .add-to-cart,
+    .view-shades {
+      padding: 12px 25px;
+      border: none;
+      background-color: #ff69b4;
+      color: #fff;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      font-size: 1.1em;
+      text-decoration: none; /* Remove underline */
+      display: inline-block;
+      margin-top: 15px; /* Add 1-line gap */
+    }
+
+    .add-to-cart:hover,
+    .view-shades:hover {
+      background-color: #e91e63;
+      transform: scale(1.05);
+    }
+
+    /* Cart message */
+    #cart-message {
+      text-align: center;
+      font-size: 1.2em;
+      color: #28a745;
+      margin-top: 20px;
+      display: none; /* Hidden by default */
+    }
+
+    /* Cart sidebar */
+    #cart-sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 300px;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      padding: 20px;
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.5);
+      display: none;
+      overflow-y: auto;
+    }
+
+    #cart-sidebar h2 {
+      text-align: center;
+      color: #ff69b4;
+      margin-bottom: 20px;
+    }
+
+    #cart-sidebar .total-price {
+      font-size: 1.5em;
+      color: #e91e63;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    #cart-sidebar .close-cart {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.5em;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    /* Cart item styling */
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .cart-item span {
+      font-size: 1.1em;
+    }
+
+    .remove-item {
+      color: #e91e63;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .remove-item:hover {
+      color: #ff69b4;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Cosmetics Store</h1>
+<p class="subtitle">Explore the Best Beauty Products</p>
+
+<div class="product-grid" id="productGrid">
+  <!-- Products will be dynamically generated here by JavaScript -->
+</div>
+
+<div id="cart-sidebar">
+  <span class="close-cart" onclick="toggleCart()">×</span>
+  <h2>Your Cart</h2>
+  <div id="cart-items"></div>
+  <div class="total-price" id="total-price">Total: Rs. 0</div>
+</div>
+
+<div id="cart-message">Item added to cart!</div>
+
+<script>
+  // List of cosmetics products
+  const products = [
+    { id: 1, title: "Lipstick", price: "View all shades", image: "Lipstick.jpg", shades: [] },
+    { id: 2, title: "Foundation", price: "Rs. 4500", image: "Foundation.jpg", shades: [] },
+    { id: 3, title: "Mascara", price: "Rs. 450", image: "Mascara.jpg", shades: [] },
+    { id: 4, title: "Blush", price: "Rs. 780", image: "Blush.jpg", shades: [] },
+    { id: 5, title: "Eyeshadow", price: "Rs. 810", image: "Eyeshadow.jpg", shades: [] },
+    { id: 6, title: "Nail Polish", price: "Rs. 290", image: "Nail Polish.jpg", shades: [] },
+    { id: 7, title: "Perfume", price: "Rs. 1800", image: "Perfume.jpg", shades: [] },
+    { id: 8, title: "Skincare Serum", price: "Rs. 560", image: "Skincare Serum.jpg", shades: [] },
+    { id: 9, title: "Makeup Remover", price: "Rs. 349", image: "Makeup Remover.jpg", shades: [] },
+    { id: 10, title: "Hair Serum", price: "Rs. 776", image: "Hair Serum.jpg", shades: [] },
+    { id: 11, title: "Eye Cream", price: "Rs. 450", image: "Eye Cream.jpg", shades: [] },
+    { id: 12, title: "Shampoo", price: "Rs. 670", image: "Shampoo.jpg", shades: [] },
+    { id: 13, title: "Conditioner", price: "Rs. 250", image: "Conditioner.jpg", shades: [] },
+    { id: 14, title: "Lip Balm", price: "Rs. 430", image: "Lip Balm.jpg", shades: [] },
+    { id: 15, title: "Bronzer", price: "Rs. 890", image: "Bronzer.jpg", shades: [] },
+    { id: 16, title: "Highlighter", price: "Rs. 349", image: "Highlighter.jpg", shades: [] }
+  ];
+
+  let cart = [];
+
+  // Function to render products dynamically
+  function renderProducts() {
+    const productGrid = document.getElementById("productGrid");
+    products.forEach(product => {
+      const productCard = document.createElement("div");
+      productCard.className = "product-card";
+
+      const isLipstick = product.title.toLowerCase().includes('lipstick');
+
+      productCard.innerHTML = `
+        <img class="product-image" src="${product.image}" alt="${product.title}">
+        <div class="product-info">
+          <div class="product-title">${product.title}</div>
+          <div class="product-price">${product.price}</div>
+          ${isLipstick ? `<a href="lipshades.html?product=${encodeURIComponent(product.title)}" class="view-shades">Shades</a>` : `<button class="add-to-cart" onclick="addToCart(${product.id}, '${product.price}')">Add to Cart</button>`}
+        </div>
+        <div class="shades-container" id="shades-${product.id}" style="display: none;">
+          <ul>
+            ${product.shades.map(shade => `<li>${shade}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+
+      // Add functionality for the View Shades button
+      if (isLipstick) {
+        const shadesButton = productCard.querySelector(".view-shades");
+        const shadesContainer = productCard.querySelector(".shades-container");
+
+        shadesButton.addEventListener("click", () => {
+          shadesContainer.style.display = shadesContainer.style.display === "none" || !shadesContainer.style.display ? "block" : "none";
+        });
+      }
+
+      productGrid.appendChild(productCard);
+    });
+  }
+
+  // Function to add item to cart
+  function addToCart(productId, price) {
+    const product = products.find(p => p.id === productId);
+    cart.push({ product, price });
+    updateCart();
+    document.getElementById("cart-message").style.display = 'block';
+    setTimeout(() => {
+      document.getElementById("cart-message").style.display = 'none';
+    }, 2000);
+  }
+
+  // Function to remove item from cart
+  function removeFromCart(productId) {
+    cart = cart.filter(item => item.product.id !== productId);
+    updateCart();
+  }
+
+  // Function to update cart sidebar
+  function updateCart() {
+    const cartSidebar = document.getElementById("cart-sidebar");
+    const cartItems = document.getElementById("cart-items");
+    const totalPriceElement = document.getElementById("total-price");
+
+    cartItems.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <span>${item.product.title} - ${item.price}</span>
+        <span class="remove-item" onclick="removeFromCart(${item.product.id})">Remove</span>
+      </div>
+    `).join('');
+
+    const totalPrice = cart.reduce((total, item) => {
+      const price = item.price.startsWith('Rs.') ? parseInt(item.price.slice(3)) : 0;
+      return total + price;
+    }, 0);
+
+    totalPriceElement.textContent = `Total: Rs. ${totalPrice}`;
+
+    cartSidebar.style.display = 'block';
+  }
+
+  // Function to toggle cart sidebar visibility
+  function toggleCart() {
+    const cartSidebar = document.getElementById("cart-sidebar");
+    cartSidebar.style.display = cartSidebar.style.display === 'none' || cartSidebar.style.display === '' ? 'block' : 'none';
+  }
+
+  // Initialize
+  window.onload = renderProducts;
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lipshades Collection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('bg cosmetic.jpeg');
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+
+        header {
+            background-color: #ff6f91;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card img {
+            width: 40%;
+            height: 40%;
+	margin: 10px 0; 
+        }
+
+        .card h3 {
+            margin: 0.5rem 0;
+            color: #333;
+        }
+
+        .card p {
+            color: #777;
+            font-size: 0.9rem;
+            margin: 0.5rem;
+        }
+
+        .card button {
+            background-color: #ff6f91;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .card button:hover {
+            background-color: #e05576;
+        }
+
+        .cart {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 250px;
+        }
+
+        .cart h3 {
+            margin: 0;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .cart ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .cart ul li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 5px 0;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .cart ul li button {
+            background-color: #ff6f91;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .cart ul li button:hover {
+            background-color: #e05576;
+        }
+
+        .cart .total {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Our Lipshade Collection</h1>
+    </header>
+
+    <div class="container">
+        <div class="card" data-name="Ruby Red" data-price="500">
+            <img src="red.webp" alt="Ruby Red Lipshade">
+            <h3>Ruby Red</h3>
+            <p>A bold and classic shade for every occasion.</p>
+            <button onclick="addToCart(this)">Buy Now</button>
+            <a href="redshade.html"><button>Try Shade</button></a>
+        </div>
+
+        <div class="card" data-name="Peach Bliss" data-price="400">
+            <img src="peach.webp" alt="Peach Bliss Lipshade">
+            <h3>Peach Bliss</h3>
+            <p>Soft peach tones for a natural look.</p>
+            <button onclick="addToCart(this)">Buy Now</button>
+            <a href="peachshade.html"><button>Try Shade</button></a>
+        </div>
+
+        <div class="card" data-name="Mauve Magic" data-price="450">
+            <img src="mauve.jpg" alt="Mauve Magic Lipshade">
+            <h3>Mauve Magic</h3>
+            <p>Elegant mauve with a touch of mystery.</p>
+            <button onclick="addToCart(this)">Buy Now</button>
+            <a href="mauveshade.html"><button>Try Shade</button></a>
+
+        </div>
+
+        <div class="card" data-name="Orange Charm" data-price="550">
+            <img src="orangemain.avif" alt="Orange Charm Lipshade">
+            <h3>Orange Charm</h3>
+            <p>Vibrant coral for a playful vibe.</p>
+            <button onclick="addToCart(this)">Buy Now</button>
+            <a href="orange.html"><button>Try Shade</button></a>
+
+        </div>
+    </div>
+
+    <div class="cart">
+        <h3>Your Cart</h3>
+        <ul id="cart-items"></ul>
+        <div class="total">Total: ₹0</div>
+    </div>
+
+    <script>
+        const cartItems = [];
+        const cartList = document.getElementById('cart-items');
+        const totalElement = document.querySelector('.cart .total');
+
+        function addToCart(button) {
+            const card = button.parentElement;
+            const name = card.getAttribute('data-name');
+            const price = parseInt(card.getAttribute('data-price'));
+
+            cartItems.push({ name, price });
+            updateCart();
+        }
+
+        function removeFromCart(index) {
+            cartItems.splice(index, 1);
+            updateCart();
+        }
+
+        function updateCart() {
+            cartList.innerHTML = '';
+            let total = 0;
+
+            cartItems.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `${item.name} - ₹${item.price} <button onclick="removeFromCart(${index})">Remove</button>`;
+                cartList.appendChild(li);
+                total += item.price;
+            });
+
+            totalElement.textContent = `Total: ₹${total}`;
+        }
+    </script>
+</body>
+</html>
