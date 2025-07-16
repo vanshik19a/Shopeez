@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feature-Packed Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .button-bar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .button-bar button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .button-bar button:hover {
+            background-color: #0056b3;
+        }
+        .slider {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slides img {
+            width: 100%;
+            flex-shrink: 0;
+            object-fit: cover;
+        }
+        .slider-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+        .slider-buttons button {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #444;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+        }
+        nav a:hover {
+            background-color: #555;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+        .category {
+            flex: 1 1 45%;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .category h2 {
+            text-align: center;
+            color: #333;
+        }
+        .feature-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .feature-list li {
+            margin: 10px 0;
+        }
+        .category img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 15px;
+        }
+        .category button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .category button:hover {
+            background-color: #555;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+    <script>
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            const slides = document.querySelector('.slides');
+            const totalSlides = slides.children.length;
+            currentSlide = (index + totalSlides) % totalSlides;
+            slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setInterval(nextSlide, 3000);
+        });
+    </script>
+</head>
+<body>
+
+<header>
+    <h1>WELCOME TO SHOP EASE</h1>
+    <div class="button-bar">
+        <a href="aboutus.html"><button>ABOUT US</button></a>
+        <a href="contact.html"><button>CONTACT</button></a>
+    </div>
+    <div class="slider">
+        <div class="slides">
+            <img src="mainpage1.jpg" alt="Slide 1">
+            <img src="mainpage2.jpg" alt="Slide 2">
+            <img src="mainpage3.jpg" alt="Slide 3">
+            <img src="mainpage4.webp" alt="Slide 4">
+        </div>
+        <div class="slider-buttons">
+            <button onclick="prevSlide()">&#10094;</button>
+            <button onclick="nextSlide()">&#10095;</button>
+        </div>
+    </div>
+</header>
+
+<nav>
+    <a href="#category-a">CLOTHING</a>
+    <a href="#category-b">COSMETICS</a>
+    <a href="#category-c">ELECTRONICS</a>
+    <a href="#category-d">GROCERY</a>
+</nav>
+
+<div class="container">
+    <div class="category" id="category-a">
+        <h2>CLOTHING</h2>
+        <img src="cloth.jpg" alt="cloth">
+        <ul class="feature-list">
+            <li>Include a variety of designs and materials for both men and women, following the latest trends.</li>
+        </ul>
+        <a href="menwomen.html"><button>Shop</button></a>
+    </div>
+
+    <div class="category" id="category-b">
+        <h2>COSMETICS</h2>
+        <img src="cosmetics.jpg" alt="cosmetics">
+        <ul class="feature-list">
+            <li>Offer the highest quality cosmetics that are perfectly suited to your skin, along with a live try-on option for lipsticks.</li>
+        </ul>
+        <a href="costemics.html"><button>Shop</button></a>
+    </div>
+
+    <div class="category" id="category-c">
+        <h2>ELECTRONICS</h2>
+        <img src="electronics.jpg" alt="electronics">
+        <ul class="feature-list">
+            <li>"Discover top-quality electronics, unbeatable prices, and comparison feature for the best choice"</li>
+        </ul>
+        <a href="electronics.html"><button>Shop</button></a>
+    </div>
+
+    <div class="category" id="category-d">
+        <h2>GROCERY</h2>
+        <img src="grocery.jpg" alt="grocery">
+        <ul class="feature-list">
+            <li>"Shop fresh, save big! Your one-stop online grocery store for quality and convenience."</li>
+        </ul>
+        <a href="grocery.html"><button>Shop</button></a>
+    </div>
+</div>
+
+<footer>
+    &copy; 2025 Shop Ease. All Rights Reserved.
+</footer>
+
+</body>
+</html>
