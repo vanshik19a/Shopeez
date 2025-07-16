@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-image: url('grocerymain.jpg');
+            background-size: cover;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 10px;
+            background: linear-gradient(90deg, #A0522D, #8B4513);
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .sort-container {
+            margin-left: 20px;
+            position: absolute;
+            left: 10px;
+            top: 25px;
+        }
+
+        .main-container {
+            display: flex;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .cart {
+            display: none;
+            width: 30%;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-right: 20px;
+        }
+
+        .cart.active {
+            display: block;
+        }
+
+        .cart h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            color: #A0522D;
+        }
+
+        .cart ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .cart li {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #total-price {
+            font-weight: bold;
+            font-size: 1.2em;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .remove-btn {
+            background-color: #CD5C5C;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background-color: #B22222;
+        }
+
+        .product-list {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .categories {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            gap: 10px;
+        }
+
+        .categories button {
+            padding: 12px 20px;
+            background: linear-gradient(90deg, #A0522D, #8B4513);
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .categories button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .product {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .product:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .product h3 {
+            margin: 10px 0;
+            font-size: 1.5em;
+            color: #A0522D;
+        }
+
+        .product p {
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+
+        button.add-to-cart {
+            background: linear-gradient(90deg, #A0522D, #8B4513);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        button.add-to-cart:hover {
+            background-color: #8B4513;
+        }
+
+        /* Spin wheel styles */
+        .spin-wheel-container {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #spin-wheel {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            border: 5px solid #ccc;
+            position: relative;
+            margin: 20px auto;
+            overflow: hidden;
+            transform: rotate(0deg);
+            transition: transform 5s ease-out;
+        }
+
+        .spin-wheel-segment {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            top: 0;
+            left: 50%;
+            transform-origin: 100% 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .spin-wheel-segment:nth-child(1) { background-color: #ff5733; transform: rotate(0deg); }
+        .spin-wheel-segment:nth-child(2) { background-color: #ff6f61; transform: rotate(45deg); }
+        .spin-wheel-segment:nth-child(3) { background-color: #f39c12; transform: rotate(90deg); }
+        .spin-wheel-segment:nth-child(4) { background-color: #2ecc71; transform: rotate(135deg); }
+        .spin-wheel-segment:nth-child(5) { background-color: #3498db; transform: rotate(180deg); }
+        .spin-wheel-segment:nth-child(6) { background-color: #9b59b6; transform: rotate(225deg); }
+        .spin-wheel-segment:nth-child(7) { background-color: #e74c3c; transform: rotate(270deg); }
+        .spin-wheel-segment:nth-child(8) { background-color: #f1c40f; transform: rotate(315deg); }
+
+        #spin-btn {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        #spin-btn:hover {
+            background-color: #2ecc71;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        #final-total {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1> Welcome to Your Online Grocery Store</h1>
+        <div class="sort-container"> 
+            <label for="sort">Sort By Price:</label>
+            <select id="sort" onchange="sortProducts()">
+                <option value="asc">Low to High</option>
+                <option value="desc">High to Low</option>
+            </select>
+        </div>
+    </header>
+
+    <div class="categories">
+        <button onclick="filterCategory('Fruits')">Fruits</button>
+        <button onclick="filterCategory('Vegetables')">Vegetables</button>
+        <button onclick="filterCategory('Dairy')">Dairy</button>
+        <button onclick="filterCategory('Snacks')">Snacks</button>
+        <button onclick="filterCategory('Beverages')">Beverages</button>
+    </div>
+
+    <div class="main-container">
+        <div class="cart" id="cart-section">
+            <h2>Your Cart</h2>
+            <ul id="cart-items"></ul>
+            <p>Total Price: ₹<span id="total-price">0</span></p>
+            <button id="spin-btn" class="spin-btn" onclick="openSpinWheel()">Spin the Wheel</button>
+        </div>
+        <section id="products" class="product-list">
+            <!-- Product Items Here -->
+        </section>
+    </div>
+
+    <div class="spin-wheel-container" id="spin-wheel-container">
+        <div id="spin-wheel" class="spin-wheel">
+            <div class="spin-wheel-segment" data-discount="2%">2%</div>
+            <div class="spin-wheel-segment" data-discount="0%">better luck next time</div>
+            <div class="spin-wheel-segment" data-discount="0%">better luck next time</div>
+            <div class="spin-wheel-segment" data-discount="3%">3%</div>
+            <div class="spin-wheel-segment" data-discount="0%">better luck next time</div>
+            <div class="spin-wheel-segment" data-discount="0%">better luck next time</div>
+            <div class="spin-wheel-segment" data-discount="3%">3%</div>
+            <div class="spin-wheel-segment" data-discount="2%">2%</div>
+        </div>
+        <button id="spin-btn" onclick="spinWheel()">Spin the Wheel</button>
+        <p id="result"></p>
+        <p id="final-total"></p>
+    </div>
+
+    <script>
+        const products = [
+            { id: 1, name: 'Bananas', price: 40, category: 'Fruits', rating: 4.5, image: "banana.jpg" },
+            { id: 2, name: 'Carrots', price: 30, category: 'Vegetables', rating: 4.2, image: "carrot.jpg" },
+            { id: 3, name: 'Milk(AMUL)', price: 50, category: 'Dairy', rating: 4.8, image: "milk.jpg" },
+            { id: 4, name: 'Chips(LAYS)', price: 100, category: 'Snacks', rating: 4.0, image: "chips.jpg" },
+            { id: 5, name: 'Apple', price: 60, category: 'Fruits', rating: 4.7, image: "apple.jpg" },
+            { id: 6, name: 'Tomato', price: 20, category: 'Vegetables', rating: 4.3, image: "tomato.jpg" },
+            { id: 7, name: 'Cheese', price: 120, category: 'Dairy', rating: 4.9, image: "cheese.jpg" },
+            { id: 8, name: 'Soda', price: 80, category: 'Beverages', rating: 4.1, image: "soda.jpg" },
+            { id: 9, name: 'Orange Juice', price: 90, category: 'Beverages', rating: 4.6, image: "juice.jpg" },
+            { id: 10, name: 'Cookies', price: 150, category: 'Snacks', rating: 4.4, image: "cookie.jpg" }
+        ];
+
+        let cart = [];
+
+        function displayProducts() {
+            const productList = document.getElementById('products');
+            productList.innerHTML = '';
+
+            products.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+                productDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>₹${product.price}</p>
+                    <p>Rating: ${product.rating} stars</p>
+                    <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
+                `;
+                productList.appendChild(productDiv);
+            });
+        }
+
+        function addToCart(id) {
+            const product = products.find(product => product.id === id);
+            cart.push(product);
+            updateCart();
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartSection = document.getElementById('cart-section');
+            const cartItems = document.getElementById('cart-items');
+            const totalPrice = document.getElementById('total-price');
+            cartItems.innerHTML = '';
+
+            if (cart.length > 0) {
+                cartSection.classList.add('active');
+            } else {
+                cartSection.classList.remove('active');
+            }
+
+            let total = 0;
+            cart.forEach(item => {
+                const cartItem = document.createElement('li');
+                cartItem.innerHTML = `${item.name} - ₹${item.price} 
+                    <button class="remove-btn" onclick="removeFromCart(${item.id})">Remove</button>`;
+                cartItems.appendChild(cartItem);
+                total += item.price;
+            });
+
+            totalPrice.textContent = total;
+
+            // Show spin button if total is more than 500
+            if (total > 500) {
+                document.getElementById('spin-btn').style.display = 'block';
+            } else {
+                document.getElementById('spin-btn').style.display = 'none';
+            }
+        }
+
+        function sortProducts() {
+            const sortValue = document.getElementById('sort').value;
+
+            if (sortValue === 'asc') {
+                products.sort((a, b) => a.price - b.price);
+            } else if (sortValue === 'desc') {
+                products.sort((a, b) => b.price - a.price);
+            }
+
+            displayProducts();  // Re-render the products after sorting
+        }
+
+        function filterCategory(category) {
+            const filteredProducts = products.filter(product => product.category === category);
+            displayFilteredProducts(filteredProducts);
+        }
+
+        function displayFilteredProducts(filteredProducts) {
+            const productList = document.getElementById('products');
+            productList.innerHTML = '';
+
+            filteredProducts.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+                productDiv.innerHTML = `
+                    <img src="https://via.placeholder.com/150" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>₹${product.price}</p>
+                    <p>Rating: ${product.rating} stars</p>
+                    <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
+                `;
+                productList.appendChild(productDiv);
+            });
+        }
+
+        // Display products when page loads
+        displayProducts();
+
+        function openSpinWheel() {
+            document.getElementById('spin-wheel-container').style.display = 'block';
+        }
+
+        function spinWheel() {
+            const wheel = document.getElementById('spin-wheel');
+            const randomDegree = Math.floor(Math.random() * 360);
+            wheel.style.transform = `rotate(${randomDegree + 720}deg)`;
+
+            setTimeout(() => {
+                const result = document.querySelector(`#spin-wheel .spin-wheel-segment:nth-child(${Math.floor((randomDegree / 45) % 8) + 1})`);
+                const discount = result.getAttribute('data-discount');
+                document.getElementById('result').textContent = `You won a ${discount} discount!`;
+                updateFinalTotal(discount);
+            }, 5000);
+        }
+
+        function updateFinalTotal(discount) {
+            const totalPrice = document.getElementById('total-price').textContent;
+            const discountedPrice = totalPrice * (1 - parseFloat(discount) / 100);
+            document.getElementById('final-total').textContent = `Final Price: ₹${discountedPrice.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
