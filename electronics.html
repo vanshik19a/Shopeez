@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electronics Shopping Platform</title>
+  <style>
+    /* Basic styling */
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('electronicsbg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+      color: #0077cc;
+      font-size: 2.5em;
+      text-transform: uppercase;
+      margin-bottom: 0;
+    }
+    .subtitle {
+      text-align: center;
+      color: #555;
+      font-size: 1.3em;
+      margin-bottom: 30px;
+    }
+
+    /* Product grid layout */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 30px;
+      padding: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+      z-index: 10; /* Ensure products are above the background */
+    }
+
+    /* Product card styling */
+    .product-card {
+      background-color: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+      padding: 15px;
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Image styling */
+    .product-image {
+      width: 90%;
+      height: auto;
+      border-radius: 12px;
+      margin: 0 auto;
+      transition: transform 0.3s ease;
+    }
+    .product-card:hover .product-image {
+      transform: scale(1.05);
+    }
+
+    /* Product details */
+    .product-info {
+      padding: 20px;
+    }
+    .product-title {
+      font-size: 1.6em;
+      margin: 15px 0;
+      color: #333;
+      font-weight: bold;
+    }
+    .product-price {
+      font-size: 1.4em;
+      color: #ff5252;
+      margin-bottom: 20px;
+    }
+
+    /* Button styling */
+    .add-to-cart,
+    .view-comparison {
+      padding: 12px 25px;
+      border: none;
+      background-color: #0077cc;
+      color: #ffffff;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      font-size: 1.1em;
+      display: inline-flex;
+      align-items: center;
+      margin-right: 10px;
+    }
+    .add-to-cart:hover,
+    .view-comparison:hover {
+      background-color: #005fa3;
+      transform: scale(1.05);
+    }
+    .cart-icon,
+    .comparison-icon {
+      width: 18px;
+      height: 18px;
+      margin-right: 8px;
+    }
+
+    /* Adding space between the buttons */
+    .add-to-cart {
+      margin-bottom: 10px; /* Adds space between the two buttons */
+    }
+
+    /* Cart Message */
+    #cart-message {
+      text-align: center;
+      font-size: 1.3em;
+      color: #28a745;
+      margin-top: 15px;
+      display: none; /* Hidden by default */
+    }
+
+    /* Sidebar Styles */
+    #cartSidebar {
+      position: fixed;
+      right: 0;
+      top: 0;
+      width: 300px;
+      height: 100%;
+      background-color: #fff;
+      box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      display: none;
+      z-index: 9999;
+      overflow-y: auto;
+    }
+    #cartSidebar.open {
+      display: block;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      font-size: 1.2em;
+    }
+    #totalPrice {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #0077cc;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .remove-btn {
+      cursor: pointer;
+      color: red;
+      font-size: 1.2em;
+    }
+    .cart-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #0077cc;
+      color: white;
+      border-radius: 50%;
+      padding: 15px;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Electronics Store</h1>
+<p class="subtitle">Discover the Latest Gadgets and Devices</p>
+
+<div class="product-grid" id="productGrid">
+  <!-- JavaScript will populate products here -->
+</div>
+
+<div id="cart-message">Item added to cart!</div>
+
+<!-- Cart Sidebar -->
+<div id="cartSidebar">
+  <h2>Your Cart</h2>
+  <div id="cartItems"></div>
+  <div id="totalPrice">Total: Rs. 0</div>
+  <button onclick="toggleCart()">Close</button>
+</div>
+
+<!-- Toggle Cart Button -->
+<div class="cart-toggle" onclick="toggleCart()">🛒</div>
+
+<script>
+  // Extended product data
+  const products = [
+    { id: 1, title: "Smartphone", price: "Rs. 1,45,350", image: "smartphone.jpg", comparisonPage: "phonecomparison.html" },
+    { id: 2, title: "Laptop", price: "Rs. 2,78,450", image: "laptop.jpg", comparisonPage: "devicecomparisonupdated.html" },
+    { id: 3, title: "Headphones", price: "Rs. 8700", image: "headphones.jpg", comparisonPage: "headphonescomparison.html" },
+    { id: 4, title: "Smartwatch", price: "Rs. 25000", image: "smartwatch.jpg", comparisonPage: "smartwatchcomparison.html" },
+    { id: 5, title: "Tablet", price: "Rs. 35000", image: "tablet.jpg", comparisonPage: "tabletcomparison.html" },
+    { id: 6, title: "Camera", price: "Rs. 80000", image: "camera.jpg", comparisonPage: "cameracomparison.html" },
+    { id: 7, title: "Bluetooth Speaker", price: "Rs. 6500", image: "Bluetooth Speaker.jpg", comparisonPage: "bluetoothspeakercomparison.html" },
+    { id: 8, title: "Gaming Console", price: "Rs. 45000", image: "Gaming Console.jpg", comparisonPage: "gamingconsole.html" },
+    { id: 9, title: "Wireless Mouse", price: "Rs. 7600", image: "Wireless Mouse.jpg", comparisonPage: "wirelessmousecomparison.html" },
+    { id: 10, title: "Mechanical Keyboard", price: "Rs. 4500", image: "Mechanical Keyboard.jpg" , comparisonPage: "mechanicalkeyboardcomparison.html" },
+    { id: 12, title: "Drone", price: "Rs. 9800", image: "Drone.jpg" , comparisonPage: "dronecomparison.html" },
+    { id: 15, title: "Smart Bulb", price: "Rs. 670", image: "Smart Bulb.jpg" , comparisonPage: "smartbulbcomparison.html" },
+  ];
+
+  const cart = [];
+
+  // Render products in the grid
+  const productGrid = document.getElementById('productGrid');
+  products.forEach(product => {
+    const productCard = document.createElement('div');
+    productCard.className = 'product-card';
+    productCard.innerHTML = `
+      <img src="${product.image}" alt="${product.title}" class="product-image">
+      <div class="product-info">
+        <h3 class="product-title">${product.title}</h3>
+        <p class="product-price">${product.price}</p>
+        <button class="add-to-cart" onclick="addToCart('${product.title}', '${product.price}')">
+          <img src="https://cdn-icons-png.flaticon.com/512/833/833314.png" alt="cart" class="cart-icon"> Add to Cart
+        </button>
+        ${product.comparisonPage ? `
+        <button class="view-comparison" onclick="viewComparison('${product.comparisonPage}')">
+          <img src="https://cdn-icons-png.flaticon.com/512/1330/1330208.png" alt="comparison" class="comparison-icon"> View Comparison
+        </button>
+        ` : ''}
+      </div>
+    `;
+    productGrid.appendChild(productCard);
+  });
+
+  // "Add to Cart" functionality with feedback
+  function addToCart(productName, price) {
+    cart.push({ title: productName, price: price });
+    updateCart();
+    const cartMessage = document.getElementById('cart-message');
+    cartMessage.textContent = `${productName} has been added to your cart!`;
+    cartMessage.style.display = 'block';
+    setTimeout(() => {
+      cartMessage.style.display = 'none';
+    }, 2000);
+  }
+
+  // Toggle cart sidebar visibility
+  function toggleCart() {
+    const cartSidebar = document.getElementById('cartSidebar');
+    cartSidebar.classList.toggle('open');
+  }
+
+  // Update the cart sidebar
+  function updateCart() {
+    const cartItemsContainer = document.getElementById('cartItems');
+    cartItemsContainer.innerHTML = '';
+
+    let total = 0;
+    cart.forEach(item => {
+      const itemDiv = document.createElement('div');
+      itemDiv.className = 'cart-item';
+      itemDiv.innerHTML = `
+        ${item.title} - ${item.price}
+        <span class="remove-btn" onclick="removeFromCart('${item.title}')">✖</span>
+      `;
+      cartItemsContainer.appendChild(itemDiv);
+      total += parseInt(item.price.replace(/\D/g, ''));
+    });
+
+    document.getElementById('totalPrice').textContent = `Total: Rs. ${total}`;
+  }
+
+  // Remove item from the cart
+  function removeFromCart(itemTitle) {
+    const index = cart.findIndex(item => item.title === itemTitle);
+    if (index > -1) {
+      cart.splice(index, 1);
+    }
+    updateCart();
+  }
+
+  // View Comparison page
+  function viewComparison(page) {
+    window.location.href = page;
+  }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smartphone Comparison</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        header {
+            text-align: center;
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 0;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        header p {
+            margin: 0.5rem 0 0;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .comparison-table {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #eafaf1;
+        }
+
+        td {
+            font-size: 1rem;
+        }
+
+        .extra-row {
+            background-color: #e8f5e9;
+            font-style: italic;
+            text-align: left;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem 0;
+            background-color: #333;
+            color: white;
+            margin-top: 2rem;
+        }
+
+        .compare-button, .sort-button {
+            display: inline-block;
+            margin: 1rem 0.5rem;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            color: white;
+            background-color: #2c3e50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .compare-button:hover, .sort-button:hover {
+            background-color: #45a049;
+        }
+
+        .search-bar {
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .search-bar input {
+            padding: 0.5rem;
+            font-size: 1rem;
+            width: 50%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>SMARTPHONE COMPARISON</h1>
+        <p>Find the best smartphone for you by comparing top brands and features!</p>
+    </header>
+    <main>
+        <section class="search-bar">
+            <input type="text" id="search-input" placeholder="Search by feature..." oninput="filterTable()">
+        </section>
+        <section class="comparison-table">
+            <table id="smartphone-table">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Feature</th>
+                        <th>SELLO "OUR PRODUCT"</th>
+                        <th>REDMI</th>
+                        <th>SAMSUNG</th>
+                        <th>ONE PLUS</th>
+                        <th>LIFE GOOD</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox" class="row-checkbox"></td>
+                        <td>Processor</td>
+                        <td>Qualcomm Snapdragon 8 Gen 3</td>
+                        <td>Exynos 2200</td>
+                        <td>A15 Bionic</td>
+                        <td>MediaTek Dimensity 9200</td>
+                        <td>Snapdragon 888</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="row-checkbox"></td>
+                        <td>RAM</td>
+                        <td>12GB LPDDR5</td>
+                        <td>8GB LPDDR5</td>
+                        <td>6GB RAM</td>
+                        <td>12GB LPDDR5</td>
+                        <td>8GB LPDDR4X</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="row-checkbox"></td>
+                        <td>Display</td>
+                        <td>6.7-inch OLED, 120Hz</td>
+                        <td>6.5-inch AMOLED, 120Hz</td>
+                        <td>6.1-inch Super Retina XDR</td>
+                        <td>6.78-inch AMOLED, 120Hz</td>
+                        <td>6.5-inch AMOLED, 90Hz</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="row-checkbox"></td>
+                        <td>Camera</td>
+                        <td>108MP + 12MP + 5MP</td>
+                        <td>50MP + 12MP + 12MP</td>
+                        <td>12MP + 12MP</td>
+                        <td>50MP + 13MP</td>
+                        <td>48MP + 12MP</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="row-checkbox"></td>
+                        <td>Battery</td>
+                        <td>5000mAh</td>
+                        <td>4500mAh</td>
+                        <td>3687mAh</td>
+                        <td>4800mAh</td>
+                        <td>4000mAh</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="row-checkbox"></td>
+                        <td>Weight</td>
+                        <td>200g</td>
+                        <td>210g</td>
+                        <td>174g</td>
+                        <td>205g</td>
+                        <td>180g</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="row-checkbox"></td>
+                        <td>Price</td>
+                        <td>Rs. 1,45,350</td>
+                        <td>₹65,000</td>
+                        <td>₹80,000</td>
+                        <td>₹55,000</td>
+                        <td>₹60,000</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="compare-button" onclick="compareSmartphones()">Compare</button>
+                    </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Smartphone Comparison. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function compareSmartphones() {
+            const checkboxes = document.querySelectorAll('.row-checkbox');
+            const rows = document.querySelectorAll('#smartphone-table tbody tr');
+            const tableBody = document.querySelector('#smartphone-table tbody');
+            const selectedRows = [];
+
+            checkboxes.forEach((checkbox, index) => {
+                if (checkbox.checked) {
+                    selectedRows.push(rows[index].cloneNode(true));
+                }
+            });
+
+            if (selectedRows.length > 0) {
+                tableBody.innerHTML = '';
+                selectedRows.forEach((row, index) => {
+                    tableBody.appendChild(row);
+
+                    // Add extra row for additional details after each selected row
+                    const extraRow = document.createElement('tr');
+                    extraRow.classList.add('extra-row');
+                    extraRow.innerHTML = `<td colspan="7">You choose "${row.cells[1].innerText}" feature for Comparison : You selected "${row.cells[1].innerText}" feature.</td>`;
+                    tableBody.appendChild(extraRow);
+                });
+            } else {
+                alert('Please select at least one feature to compare.');
+            }
+        }
+
+        function filterTable() {
+            const searchInput = document.getElementById('search-input').value.toLowerCase();
+            const rows = document.querySelectorAll('#smartphone-table tbody tr');
+
+            rows.forEach(row => {
+                const feature = row.cells[1].innerText.toLowerCase();
+                if (feature.includes(searchInput)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+</script>
+</body>
+</html>
